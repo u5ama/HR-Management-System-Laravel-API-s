@@ -63,5 +63,13 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'jwt.verify' => \App\Http\Middleware\JwtMiddleware::class,
+        'is_admin'=> \App\Http\Middleware\isAdmin::class,
+//        'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+//        'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+//        'permission' => \App\Http\Middleware\PermissionMiddleware::class,
+//        'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
+        'cors' => \App\Http\Middleware\Cors::class
+
     ];
 }

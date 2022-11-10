@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Api\Staff;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\StaffEmergencyContactResource;
-use App\Models\StaffEmergency;
+use App\Http\Resources\StaffNotesResource;
+use App\Models\StaffNotes;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
-class StaffEmergencyContactController extends Controller
+class StaffNotesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +19,8 @@ class StaffEmergencyContactController extends Controller
      */
     public function index(Request $request)
     {
-        $staff = StaffEmergency::where('staff_id', $request->user_id)->first();
-        $staff = new StaffEmergencyContactResource($staff);
+        $staff = StaffNotes::where('staff_id', $request->user_id)->first();
+        $staff = new StaffNotesResource($staff);
         return response()->json([
             'success' => true,
             'data' => $staff,
@@ -30,7 +31,7 @@ class StaffEmergencyContactController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return void
+     * @return Response
      */
     public function create()
     {
@@ -48,35 +49,42 @@ class StaffEmergencyContactController extends Controller
         try{
             $validator_array = [
                 'staff_id' => 'required',
-                'name' => 'required',
-                'phone_number' => 'required',
-                'relationship' => 'required',
+                'note_type' => 'required',
+                'note_date' => 'required',
+                'note_description' => 'required',
+                'note_file' => 'required|mimes:doc,docx,pdf,txt,csv,png,jpg,jpeg|max:5000',
             ];
             $validator = Validator::make($request->all(), $validator_array);
             if($validator->fails()){
                 return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
             }
 
-            $staff = new StaffEmergency();
+            if ($file = $request->file('note_file')) {
+                $path = $file->store('public/staff/notes');
+                $name = $file->getClientOriginalName();
+            }
+
+            $staff = new StaffNotes();
 
             $staff->staff_id = $request->staff_id;
-            $staff->name = $request->name;
-            $staff->phone_number = $request->phone_number;
-            $staff->relationship = $request->relationship;
+            $staff->note_type = $request->note_type;
+            $staff->note_date = $request->note_date;
+            $staff->note_description = $request->note_description;
+            $staff->note_file = $path;
             $staff->save();
 
-            $staff = new StaffEmergencyContactResource($staff);
+            $staff = new StaffNotesResource($staff);
 
             return response()->json([
                 'success' => true,
-                'message' => 'Staff created successfully!',
+                'message' => 'Staff Notes created successfully!',
                 'data' => $staff,
             ],200, ['Content-Type' => 'application/json; charset=UTF-8',
                 'charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
         }
         catch(\Exception $e){
             $message = $e->getMessage();
-            $error = ['field'=>'staff_emergency_contact_store','message'=>$message];
+            $error = ['field'=>'staff_notes_store','message'=>$message];
             $errors =[$error];
             return response()->json(['errors' => $errors], 500);
         }
@@ -90,9 +98,9 @@ class StaffEmergencyContactController extends Controller
      */
     public function show(Request $request)
     {
-        $staff = StaffEmergency::where(['id' => $request->id])->first();
+        $staff = StaffNotes::where(['id' => $request->id])->first();
         if ($staff) {
-            $staff = StaffEmergencyContactResource::collection($staff);
+            $staff = StaffNotesResource::collection($staff);
             return response()->json([
                 'success' => true,
                 'data' => $staff,
@@ -101,7 +109,7 @@ class StaffEmergencyContactController extends Controller
         }else{
             return response()->json([
                 'success' => false,
-                'message' => 'No Staff Emergency Contact found!',
+                'message' => 'No Staff Note found!',
             ],200, ['Content-Type' => 'application/json; charset=UTF-8',
                 'charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
         }
@@ -111,7 +119,7 @@ class StaffEmergencyContactController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return void
+     * @return Response
      */
     public function edit($id)
     {
@@ -129,34 +137,43 @@ class StaffEmergencyContactController extends Controller
     {
         try{
             $validator_array = [
-                'name' => 'required',
-                'phone_number' => 'required',
-                'relationship' => 'required',
+                'note_type' => 'required',
+                'note_date' => 'required',
+                'note_description' => 'required',
+                'note_file' => 'required|mimes:doc,docx,pdf,txt,csv,png,jpg,jpeg|max:5000',
             ];
             $validator = Validator::make($request->all(), $validator_array);
             if($validator->fails()){
                 return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
             }
 
-            $staff = StaffEmergency::where('id',$id)->first();
+            $staff = StaffNotes::where('dtaff_id',$id)->first();
+            if ($file = $request->file('note_file')) {
+                $path = $file->store('public/staff/notes');
+                $name = $file->getClientOriginalName();
+            }else{
+                $path = $staff->note_file;
+            }
 
-            $staff->name = $request->name;
-            $staff->phone_number = $request->phone_number;
-            $staff->relationship = $request->relationship;
+            $staff->staff_id = $request->staff_id;
+            $staff->note_type = $request->note_type;
+            $staff->note_date = $request->note_date;
+            $staff->note_description = $request->note_description;
+            $staff->note_file = $path;
             $staff->save();
 
-            $staff = new StaffEmergencyContactResource($staff);
+            $staff = new StaffNotesResource($staff);
 
             return response()->json([
                 'success' => true,
-                'message' => 'Staff emergency contact updated successfully!',
+                'message' => 'Staff Notes updated successfully!',
                 'data' => $staff,
             ],200, ['Content-Type' => 'application/json; charset=UTF-8',
                 'charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
         }
         catch(\Exception $e){
             $message = $e->getMessage();
-            $error = ['field'=>'staff_emergency_contact_update','message'=>$message];
+            $error = ['field'=>'staff_notes_update','message'=>$message];
             $errors =[$error];
             return response()->json(['errors' => $errors], 500);
         }
@@ -166,25 +183,25 @@ class StaffEmergencyContactController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return JsonResponse
+     * @return JsonResponse|void
      */
     public function destroy($id)
     {
         try {
-            $staff = StaffEmergency::findorFail($id);
+            $staff = StaffNotes::findorFail($id);
             if ($staff) {
                 $staff->delete();
 
                 return response()->json([
                     'success' => true,
-                    'message' => 'Staff emergency contact deleted successfully!',
+                    'message' => 'Staff Note deleted successfully!',
                 ],200, ['Content-Type' => 'application/json; charset=UTF-8',
                     'charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
             }
         }
         catch(\Exception $e){
             $message = $e->getMessage();
-            $error = ['field'=>'staff_emergency_contact_destroy','message'=>$message];
+            $error = ['field'=>'staff_notes_destroy','message'=>$message];
             $errors =[$error];
             return response()->json(['errors' => $errors], 500);
         }

@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class StaffEmergency extends Model
+class StaffNotes extends Model
 {
     use HasFactory, SoftDeletes;
     protected $guarded = [];
-    protected $table = 'staff_emergency_contact';
+    protected $table = 'staff_notes';
 }

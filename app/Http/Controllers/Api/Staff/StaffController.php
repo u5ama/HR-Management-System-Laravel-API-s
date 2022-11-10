@@ -114,14 +114,13 @@ class StaffController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param Request $request
      * @return JsonResponse
      */
-    public function show(Request $request, $id)
+    public function show(Request $request)
     {
-        $company_id = $request->company_id;
 
-        $staff = Staff::with('user', 'staffDetails')->where(['company_id'=> $company_id, 'id' => $id])->first();
+        $staff = Staff::with('user', 'staffDetails')->where(['id' => $request->id])->first();
         if ($staff) {
             $staff = StaffProfileResource::collection($staff);
             return response()->json([

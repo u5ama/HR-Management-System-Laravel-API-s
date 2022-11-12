@@ -68,7 +68,11 @@ class StaffController extends Controller
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'phone_number' => $request->phone_number,
-                'last_4_of_SNN' => $request->last_4_of_SNN,
+                'date_of_birth' => $request->date_of_birth,
+                'home_address' => $request->home_address,
+                'city' => $request->city,
+                'state' => $request->state,
+                'zip_code' => $request->zip_code,
             ]);
 
             User::create([
@@ -171,7 +175,11 @@ class StaffController extends Controller
             $staff->first_name = $request->first_name;
             $staff->last_name = $request->last_name;
             $staff->phone_number = $request->phone_number;
-            $staff->last_4_of_SNN = $request->last_4_of_SNN;
+            $staff->date_of_birth = $request->date_of_birth;
+            $staff->home_address = $request->home_address;
+            $staff->city = $request->city;
+            $staff->state = $request->state;
+            $staff->zip_code = $request->zip_code;
             $staff->save();
 
 

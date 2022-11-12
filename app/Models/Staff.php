@@ -14,7 +14,7 @@ class Staff extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Models\User', 'staff_id','id');
+        return $this->hasOne('App\Models\User', 'staff_id','id');
     }
 
     public function staffDetails()

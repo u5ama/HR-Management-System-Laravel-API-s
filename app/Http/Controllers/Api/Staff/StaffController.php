@@ -64,15 +64,13 @@ class StaffController extends Controller
                 return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
             }
 
-            $staff = new Staff();
-
-            $staff->company_id = $request->company_id;
-            $staff->first_name = $request->first_name;
-            $staff->last_name = $request->last_name;
-            $staff->phone_number = $request->phone_number;
-            $staff->last_4_of_SNN = $request->last_4_of_SNN;
-            $staff->save();
-
+            $staff = Staff::create([
+                'company_id' => $request->company_id,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'phone_number' => $request->phone_number,
+                'last_4_of_SNN' => $request->last_4_of_SNN,
+            ]);
 
             User::create([
                 'staff_id' => $staff->id,
@@ -93,7 +91,7 @@ class StaffController extends Controller
                 'pay_rate_type' => $request->pay_rate_type,
                 'pay_rate_amount' => $request->pay_rate_amount,
             ]);
-
+            $staff = Staff::with('user', 'staffDetails')->where('id', $staff->id)->first();
             $staff = new StaffProfileResource($staff);
 
             return response()->json([
@@ -119,10 +117,9 @@ class StaffController extends Controller
      */
     public function show(Request $request)
     {
-
         $staff = Staff::with('user', 'staffDetails')->where(['id' => $request->id])->first();
         if ($staff) {
-            $staff = StaffProfileResource::collection($staff);
+            $staff = new StaffProfileResource($staff);
             return response()->json([
                 'success' => true,
                 'data' => $staff,

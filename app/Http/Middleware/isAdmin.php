@@ -20,11 +20,11 @@ class isAdmin
     {
         $user = JWTAuth::parseToken()->authenticate();
         if ($user){
-            if($authCheck=="company" && $user->user_type != '1'){
+            if($authCheck=="company" && $user->user_type != 'company'){
 
                 abort(403);
             }
-            if($authCheck=="staff" && $user->user_type != 0){
+            if($authCheck=="staff" && $user->user_type != 'staff'){
 
                 abort(403);
             }

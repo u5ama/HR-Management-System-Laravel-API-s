@@ -31,19 +31,17 @@ class StaffProfileResource extends JsonResource
                 'zip_code'=>$this->zip_code,
                 'last_4_of_SNN'=>$this->last_4_of_SNN,
 
-                'type_of_worker'=>$this->staff_info->type_of_worker,
-                'type_of_employee'=>$this->staff_info->type_of_employee,
-                'type_of_contractor'=>$this->staff_info->type_of_contractor,
-                'business_name'=>$this->staff_info->business_name,
-                'start_date'=>$this->staff_info->start_date,
-                'state_working_in'=>$this->staff_info->state_working_in,
-                'pay_rate_type'=>$this->staff_info->pay_rate_type,
-                'pay_rate_amount'=>$this->staff_info->pay_rate_amount,
+                'type_of_worker'=>$this->staffDetails->type_of_worker,
+                'type_of_employee'=>$this->staffDetails->type_of_employee,
+                'type_of_contractor'=>$this->staffDetails->type_of_contractor,
+                'business_name'=>$this->staffDetails->business_name,
+                'start_date'=>$this->staffDetails->start_date,
+                'state_working_in'=>$this->staffDetails->state_working_in,
+                'pay_rate_type'=>$this->staffDetails->pay_rate_type,
+                'pay_rate_amount'=>$this->staffDetails->pay_rate_amount,
 
                 'created_at'=>$this->created_at,
                 'updated_at'=>$this->updated_at,
-
-                'token'=> $this->token,
             ];
     }
 }

@@ -18,7 +18,7 @@ class CompanyProfileResource extends JsonResource
         return
             [
                 'id'=> $this->id,
-                'full_name'=> $this->full_name,
+                'full_name'=> $this->name,
                 'email'=> $this->email,
                 'user_type'=> $this->user_type,
                 'user_status'=> $this->user_status,
@@ -27,6 +27,9 @@ class CompanyProfileResource extends JsonResource
                 'company_location_zip_code'=> $this->company_location_zip_code,
                 'how_did_you_hear'=> $this->how_did_you_hear,
                 'industry_type'=> $this->industry_type,
+                'token'=> $this->token,
+                'created_at'=>$this->created_at,
+                'updated_at'=>$this->updated_at,
             ];
     }
 }

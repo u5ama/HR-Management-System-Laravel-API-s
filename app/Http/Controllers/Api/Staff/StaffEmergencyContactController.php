@@ -92,7 +92,7 @@ class StaffEmergencyContactController extends Controller
     {
         $staff = StaffEmergency::where(['id' => $request->id])->first();
         if ($staff) {
-            $staff = StaffEmergencyContactResource::collection($staff);
+            $staff = new StaffEmergencyContactResource($staff);
             return response()->json([
                 'success' => true,
                 'data' => $staff,

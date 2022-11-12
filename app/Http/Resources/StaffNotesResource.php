@@ -22,7 +22,7 @@ class StaffNotesResource extends JsonResource
                 'note_type'=>$this->note_type,
                 'note_date'=>$this->note_date,
                 'note_description'=>$this->note_description,
-                'note_file'=> Storage::url($this->note_file),
+                'note_file'=> $this->note_file ? Storage::url($this->note_file) : null,
                 'created_at'=>$this->created_at,
                 'updated_at'=>$this->updated_at,
             ];

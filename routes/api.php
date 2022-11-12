@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Staff\StaffController;
 use App\Http\Controllers\Api\Staff\StaffEmergencyContactController;
+use App\Http\Controllers\Api\Staff\StaffNotesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

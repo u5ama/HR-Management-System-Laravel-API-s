@@ -52,13 +52,12 @@ class StaffNotesController extends Controller
                 'note_type' => 'required',
                 'note_date' => 'required',
                 'note_description' => 'required',
-                'note_file' => 'required|mimes:doc,docx,pdf,txt,csv,png,jpg,jpeg|max:5000',
             ];
             $validator = Validator::make($request->all(), $validator_array);
             if($validator->fails()){
                 return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
             }
-
+            $path = '';
             if ($file = $request->file('note_file')) {
                 $path = $file->store('public/staff/notes');
                 $name = $file->getClientOriginalName();
@@ -100,7 +99,7 @@ class StaffNotesController extends Controller
     {
         $staff = StaffNotes::where(['id' => $request->id])->first();
         if ($staff) {
-            $staff = StaffNotesResource::collection($staff);
+            $staff = new StaffNotesResource($staff);
             return response()->json([
                 'success' => true,
                 'data' => $staff,
@@ -148,10 +147,11 @@ class StaffNotesController extends Controller
             }
 
             $staff = StaffNotes::where('dtaff_id',$id)->first();
+            $path = '';
             if ($file = $request->file('note_file')) {
                 $path = $file->store('public/staff/notes');
                 $name = $file->getClientOriginalName();
-            }else{
+            }else if(!empty($staff->note_file)){
                 $path = $staff->note_file;
             }
 

@@ -112,7 +112,7 @@ class AuthController extends Controller
     {
         try {
             $validator_array = [
-                'name' => 'required|string|max:255',
+                'full_name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
                 'password' => 'required|string|min:6',
             ];
@@ -123,7 +123,7 @@ class AuthController extends Controller
             if ($request->user_type !== '' && $request->user_type !== 'staff')
             {
                 $user = User::create([
-                    'name' => $request->name,
+                    'name' => $request->full_name,
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                     'user_status' => 'active',

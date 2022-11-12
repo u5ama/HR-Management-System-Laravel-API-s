@@ -57,7 +57,6 @@ class StaffController extends Controller
                 'email' => 'required|string|email|max:255|unique:users',
                 'password' => 'required|string|min:6',
                 'phone_number' => 'required',
-                'last_4_of_SNN' => 'required',
             ];
             $validator = Validator::make($request->all(), $validator_array);
             if($validator->fails()){
@@ -160,7 +159,7 @@ class StaffController extends Controller
                 'last_name' => 'required',
                 'email' => 'required|string|email|max:255|unique:users',
                 'phone_number' => 'required',
-                'last_4_of_SNN' => 'required',
+//                'last_4_of_SNN' => 'required',
             ];
             $validator = Validator::make($request->all(), $validator_array);
             if($validator->fails()){

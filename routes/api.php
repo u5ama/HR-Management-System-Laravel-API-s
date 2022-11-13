@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Staff\StaffController;
+use App\Http\Controllers\Api\Staff\StaffDocumentsController;
 use App\Http\Controllers\Api\Staff\StaffEmergencyContactController;
 use App\Http\Controllers\Api\Staff\StaffNotesController;
 use App\Http\Controllers\Api\Staff\StaffRolesController;
@@ -53,7 +54,6 @@ Route::middleware(['cors'])->prefix('v1')->name('api.v1.')->group(function(){
                 Route::post('staff_notes/{id}', 'update')->name('staff_notes.update');
                 Route::delete('staff_notes/{id}', 'destroy')->name('staff_notes.destroy');
             });
-
             //Staff Roles
             Route::controller(StaffRolesController::class)->group(function(){
                 Route::get('staff_roles', 'index')->name('staff_roles.index');
@@ -61,6 +61,14 @@ Route::middleware(['cors'])->prefix('v1')->name('api.v1.')->group(function(){
                 Route::post('showStaffRoles', 'show')->name('staff_roles.show');
                 Route::post('staff_roles/{id}', 'update')->name('staff_roles.update');
                 Route::delete('staff_roles/{id}', 'destroy')->name('staff_roles.destroy');
+            });
+            //Staff Roles
+            Route::controller(StaffDocumentsController::class)->group(function(){
+                Route::get('staff_documents', 'index')->name('staff_documents.index');
+                Route::post('staff_documents', 'store')->name('staff_documents.store');
+                Route::post('showStaffDocuments', 'show')->name('staff_documents.show');
+                Route::post('staff_documents/{id}', 'update')->name('staff_documents.update');
+                Route::delete('staff_documents/{id}', 'destroy')->name('staff_documents.destroy');
             });
         });
 

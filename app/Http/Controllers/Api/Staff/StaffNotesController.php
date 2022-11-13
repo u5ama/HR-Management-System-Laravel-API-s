@@ -145,7 +145,7 @@ class StaffNotesController extends Controller
                 return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
             }
 
-            $staff = StaffNotes::where('dtaff_id',$id)->first();
+            $staff = StaffNotes::where('id',$id)->first();
             $path = '';
             if ($file = $request->file('note_file')) {
                 $path = $file->store('public/staff/notes');

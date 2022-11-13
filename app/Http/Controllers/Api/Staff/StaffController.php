@@ -22,7 +22,7 @@ class StaffController extends Controller
     public function index(Request $request)
     {
         $company_id = $request->company_id;
-        $staff = Staff::with('user', 'staffDetails')->where('company_id', $company_id)->get();
+        $staff = Staff::with('user', 'staffDetails','staffRole')->where('company_id', $company_id)->get();
         $staff = StaffProfileResource::collection($staff);
         return response()->json([
             'success' => true,
@@ -73,6 +73,7 @@ class StaffController extends Controller
                 'city' => $request->city,
                 'state' => $request->state,
                 'zip_code' => $request->zip_code,
+                'assigned_role_id' => $request->assigned_role_id,
             ]);
 
             User::create([
@@ -120,7 +121,7 @@ class StaffController extends Controller
      */
     public function show(Request $request)
     {
-        $staff = Staff::with('user', 'staffDetails')->where(['id' => $request->id])->first();
+        $staff = Staff::with('user', 'staffDetails','staffRole')->where(['id' => $request->id])->first();
         if ($staff) {
             $staff = new StaffProfileResource($staff);
             return response()->json([
@@ -180,6 +181,7 @@ class StaffController extends Controller
             $staff->city = $request->city;
             $staff->state = $request->state;
             $staff->zip_code = $request->zip_code;
+            $staff->assigned_role_id = $request->assigned_role_id;
             $staff->save();
 
 

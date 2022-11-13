@@ -21,4 +21,9 @@ class Staff extends Model
     {
         return $this->hasOne('App\Models\StaffDetails', 'staff_id','id');
     }
+
+    public function staffRole()
+    {
+        return $this->hasOne('App\Models\StaffRoles', 'id','assigned_role_id');
+    }
 }

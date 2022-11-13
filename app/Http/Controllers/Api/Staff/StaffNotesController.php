@@ -139,7 +139,6 @@ class StaffNotesController extends Controller
                 'note_type' => 'required',
                 'note_date' => 'required',
                 'note_description' => 'required',
-                'note_file' => 'required|mimes:doc,docx,pdf,txt,csv,png,jpg,jpeg|max:5000',
             ];
             $validator = Validator::make($request->all(), $validator_array);
             if($validator->fails()){

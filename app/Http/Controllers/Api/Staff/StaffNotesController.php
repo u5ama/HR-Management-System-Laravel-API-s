@@ -19,7 +19,7 @@ class StaffNotesController extends Controller
      */
     public function index(Request $request)
     {
-        $staff = StaffNotes::where('staff_id', $request->user_id)->first();
+        $staff = StaffNotes::where('staff_id', $request->staff_id)->first();
         $staff = new StaffNotesResource($staff);
         return response()->json([
             'success' => true,

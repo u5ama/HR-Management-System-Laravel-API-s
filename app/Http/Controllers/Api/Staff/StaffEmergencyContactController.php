@@ -18,7 +18,7 @@ class StaffEmergencyContactController extends Controller
      */
     public function index(Request $request)
     {
-        $staff = StaffEmergency::where('staff_id', $request->user_id)->first();
+        $staff = StaffEmergency::where('staff_id', $request->staff_id)->first();
         $staff = new StaffEmergencyContactResource($staff);
         return response()->json([
             'success' => true,

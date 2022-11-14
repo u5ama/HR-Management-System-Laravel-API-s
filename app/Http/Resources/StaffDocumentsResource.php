@@ -19,7 +19,7 @@ class StaffDocumentsResource extends JsonResource
         return
             [
                 'id'=>$this->id,
-                'staff_id'=>$this->staff_id,
+                'staff_id'=>(int)$this->staff_id,
                 'document_title'=>$this->document_title,
                 'document_file'=> $this->document_file ? Storage::url($this->document_file) : null,
                 'created_at'=>$this->created_at,

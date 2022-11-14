@@ -18,7 +18,7 @@ class StaffRolesResource extends JsonResource
         return
             [
                 'id'=>$this->id,
-                'company_id'=>$this->company_id,
+                'company_id'=> (int)$this->company_id,
                 'role_name'=>$this->role_name,
                 'created_at'=>$this->created_at,
                 'updated_at'=>$this->updated_at,

@@ -40,6 +40,7 @@ class StaffProfileResource extends JsonResource
                 'pay_rate_type'=>$this->staffDetails->pay_rate_type,
                 'pay_rate_amount'=>$this->staffDetails->pay_rate_amount,
 
+                'assigned_role_id'=>$this->staffRole ? $this->staffRole->id : null,
                 'assigned_role'=>$this->staffRole ? $this->staffRole->role_name : null,
 
                 'created_at'=>$this->created_at,

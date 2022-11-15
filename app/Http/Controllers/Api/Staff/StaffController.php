@@ -162,7 +162,7 @@ class StaffController extends Controller
             $validator_array = [
                 'first_name' => 'required',
                 'last_name' => 'required',
-                'email' => 'string|email|max:255|unique:users',
+                'email' => 'required|string|email|max:255',
                 'phone_number' => 'required',
 //                'last_4_of_SNN' => 'required',
             ];

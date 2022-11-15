@@ -20,12 +20,20 @@ class StaffDocumentsController extends Controller
     public function index(Request $request)
     {
         $staff = StaffDocuments::where('staff_id', $request->staff_id)->get();
-        $staff = StaffDocumentsResource::collection($staff);
-        return response()->json([
-            'success' => true,
-            'data' => $staff,
-        ],200, ['Content-Type' => 'application/json; charset=UTF-8',
-            'charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+        if ($staff){
+            $staff = StaffDocumentsResource::collection($staff);
+            return response()->json([
+                'success' => true,
+                'data' => $staff,
+            ],200, ['Content-Type' => 'application/json; charset=UTF-8',
+                'charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+        }else{
+            return response()->json([
+                'success' => false,
+                'message' => 'No Staff Document found!',
+            ],200, ['Content-Type' => 'application/json; charset=UTF-8',
+                'charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+        }
     }
 
     /**
